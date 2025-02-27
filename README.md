@@ -1,50 +1,55 @@
-# React + TypeScript + Vite
+# Task Management with IndexedDB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a task management application that leverages IndexedDB for client-side storage. It allows users to create, read, update, and delete tasks efficiently.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-  **Add Tasks**: Users can add new tasks with a title and description.
+-  **View Tasks**: Users can view a list of all tasks.
+-  **Update Tasks**: Users can edit the details of existing tasks.
+-  **Delete Tasks**: Users can remove tasks that are no longer needed.
+-  **Persistent Storage**: Tasks are stored in IndexedDB, ensuring data persistence even after the browser is closed.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-  **React**: Used for building the user interface and managing the application state.
+-  **Tailwind CSS**: Utilized for styling the application with utility-first CSS classes.
+-  **IndexedDB**: Employed for client-side storage to ensure data persistence.
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+To get a local copy up and running, follow these simple steps.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Prerequisites
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+-  A modern web browser that supports IndexedDB.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/mdrobin45/task-management-indexedDB.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd task-management-indexedDB
+   ```
+3. Install the dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+5. Open your browser and go to `http://localhost:3000` to view the application.
+
+## Usage
+
+1. Open the application in your web browser.
+2. Use the form to add new tasks.
+3. View the list of tasks and perform actions like update or delete.
+
+## Contact
+
+Your Name - [dev@robinrana.com](mailto:dev@robinrana.com)
