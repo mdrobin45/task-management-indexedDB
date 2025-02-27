@@ -70,6 +70,7 @@ export function editTask(task: taskField) {
    };
 }
 
+// Delete task
 export function deleteTask(id: string) {
    const transaction = db.transaction("tasks", "readwrite");
    const store = transaction.objectStore("tasks");
