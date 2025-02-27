@@ -50,6 +50,6 @@ To get a local copy up and running, follow these simple steps.
 2. Use the form to add new tasks.
 3. View the list of tasks and perform actions like update or delete.
 
-## Contact
+## Developer
 
-Your Name - [dev@robinrana.com](mailto:dev@robinrana.com)
+Robin Rana - [dev@robinrana.com](mailto:dev@robinrana.com)
