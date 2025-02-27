@@ -51,13 +51,13 @@ function App() {
    };
 
    // Toggle task completion status
-   const handleToggleComplete = (id: string) => {
-      setTasks(
-         tasks.map((task) =>
-            task.id === id ? { ...task, completed: !task.completed } : task
-         )
-      );
-   };
+   // const handleToggleComplete = (id: string) => {
+   //    setTasks(
+   //       tasks.map((task) =>
+   //          task.id === id ? { ...task, completed: !task.completed } : task
+   //       )
+   //    );
+   // };
 
    // Start editing a task
    const handleStartEdit = (task: Task) => {
@@ -187,14 +187,14 @@ function App() {
                               <div>
                                  <div className="flex items-start justify-between">
                                     <div className="flex items-start space-x-3">
-                                       <input
+                                       {/* <input
                                           type="checkbox"
                                           checked={task.completed}
                                           onChange={() =>
                                              handleToggleComplete(task.id)
                                           }
                                           className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                       />
+                                       /> */}
                                        <div>
                                           <h3
                                              className={`text-lg font-medium ${
