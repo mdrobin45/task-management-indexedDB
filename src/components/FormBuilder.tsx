@@ -1,5 +1,5 @@
 import { GripVertical, Plus, Trash2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 // import { InputFieldProps, Option } from '../types';
 // import OptionsList from './OptionsList';
 // interface InputFieldProps {
@@ -20,8 +20,7 @@ import { useForm } from "react-hook-form";
 //    onUpdate: (field: InputFieldProps) => void;
 // }
 interface PropsType {
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   submitHandler: (data: Record<string, any>) => void;
+   submitHandler: (data: FieldValues) => void;
    register: ReturnType<typeof useForm>["register"];
    handleSubmit: ReturnType<typeof useForm>["handleSubmit"];
 }

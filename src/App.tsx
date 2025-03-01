@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import CreateTaskForm from "./components/CreateTaskForm";
 import FormBuilder from "./components/FormBuilder";
 import TaskList from "./components/TaskList";
@@ -9,7 +9,7 @@ import {
    editTask,
    getTasks,
 } from "./lib/indexedDBOperations";
-import { FieldType, FormBuilderFieldTypes } from "./lib/types";
+import { FieldType } from "./lib/types";
 
 // Task type definition
 interface Task {
@@ -40,7 +40,7 @@ function App() {
    const [fields, setFields] = useState<FieldType[]>([]);
 
    // Submit form builder data - Lifting state up
-   const submitHandler = (data: FormBuilderFieldTypes) => {
+   const submitHandler = (data: FieldValues) => {
       const fieldProperties: FieldType = {
          name: data.label.toLowerCase().replace(/\s/g, "-"),
          id: `field-${Date.now()}`,
