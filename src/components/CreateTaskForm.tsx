@@ -166,8 +166,8 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                         className={field.classes}>
                         <option disabled>{field.placeholder}</option>
                         {field.options?.map((option, index) => (
-                           <option key={index} value={option}>
-                              {option}
+                           <option key={index} value={option.value}>
+                              {option.label}
                            </option>
                         ))}
                      </select>
@@ -196,10 +196,12 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                               <input
                                  {...register(field.name, { required: true })}
                                  type={field.type}
-                                 id={option}
-                                 value={option}
+                                 id={option.value}
+                                 value={option.value}
                               />
-                              <label htmlFor={option}>{option}</label>
+                              <label htmlFor={option.value}>
+                                 {option.label}
+                              </label>
                            </div>
                         ))}
                      </div>
@@ -228,10 +230,12 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                               <input
                                  {...register(field.name, { required: true })}
                                  type={field.type}
-                                 id={option}
-                                 value={option}
+                                 id={option.value}
+                                 value={option.value}
                               />
-                              <label htmlFor={option}>{option}</label>
+                              <label htmlFor={option.value}>
+                                 {option.label}
+                              </label>
                            </div>
                         ))}
                      </div>

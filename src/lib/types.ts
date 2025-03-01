@@ -1,3 +1,7 @@
+interface optionsType {
+   value: string;
+   label: string;
+}
 export interface FieldType {
    name: string;
    label: string;
@@ -6,7 +10,7 @@ export interface FieldType {
    classes: string;
    required?: boolean;
    placeholder: string;
-   options?: string[];
+   options?: optionsType[];
 }
 
 export interface FormBuilderFieldTypes {

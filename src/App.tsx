@@ -50,7 +50,7 @@ function App() {
          required: data.required,
          classes:
             "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         options: data.options ? data.options.split(",") : undefined,
+         options: [{ value: "option1", label: "Option 1" }],
       };
       setFields((prevFields) => [...prevFields, fieldProperties]);
    };
