@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import CreateTaskForm from "./components/CreateTaskForm";
-import Modal from "./components/Modal";
+import FormBuilder from "./components/FormBuilder";
 import TaskList from "./components/TaskList";
 import {
    // addTask,
@@ -8,6 +9,7 @@ import {
    editTask,
    getTasks,
 } from "./lib/indexedDBOperations";
+import { FieldType, FormBuilderFieldTypes } from "./lib/types";
 
 // Task type definition
 interface Task {
@@ -17,13 +19,41 @@ interface Task {
    completed: boolean;
 }
 
+// interface FieldType {
+//    name: string;
+//    label: string;
+//    type: string;
+//    id: string;
+//    classes: string;
+//    placeholder: string;
+//    options?: string[];
+// }
+
 function App() {
    const [tasks, setTasks] = useState<Task[]>([]);
+   const { register, handleSubmit } = useForm();
    // const [title, setTitle] = useState("");
    // const [description, setDescription] = useState("");
    const [editingId, setEditingId] = useState<string | null>(null);
    const [editTitle, setEditTitle] = useState("");
    const [editDescription, setEditDescription] = useState("");
+   const [fields, setFields] = useState<FieldType[]>([]);
+
+   // Submit form builder data - Lifting state up
+   const submitHandler = (data: FormBuilderFieldTypes) => {
+      const fieldProperties: FieldType = {
+         name: data.label.toLowerCase().replace(/\s/g, "-"),
+         id: `field-${Date.now()}`,
+         label: data.label,
+         placeholder: data.placeholder,
+         type: data.type,
+         required: data.required,
+         classes:
+            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+         options: data.options ? data.options.split(",") : undefined,
+      };
+      setFields((prevFields) => [...prevFields, fieldProperties]);
+   };
 
    // Get tasks from indexedDb tasks store whenever component mounts and change tasks state
    useEffect(() => {
@@ -73,10 +103,6 @@ function App() {
       editTask(updatedTask);
       setEditingId(null);
    };
-   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-   const openPopup = () => setIsPopupOpen(true);
-   const closePopup = () => setIsPopupOpen(false);
 
    return (
       <div className="min-h-screen bg-gray-100 py-8">
@@ -85,27 +111,13 @@ function App() {
                Task Manager
             </h1>
             <div className="flex gap-x-5">
-               <div className="w-[40%] gap-x-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sticky top-[20px] h-[100%] bg-white rounded-lg shadow-md p-6 mb-8">
-                  <button
-                     onClick={openPopup}
-                     className="w-full cursor-pointer h-[50px] flex items-center justify-center border-1 border-gray-200 rounded-xl">
-                     <p>Text Field</p>
-                  </button>
-                  <button className="w-full cursor-pointer h-[50px] flex items-center justify-center border-1 border-gray-200 rounded-xl">
-                     <p>Dropdown</p>
-                  </button>
-                  <button className="w-full cursor-pointer h-[50px] flex items-center justify-center border-1 border-gray-200 rounded-xl">
-                     <p>Multiple Select</p>
-                  </button>
-               </div>
-               <Modal
-                  isOpen={isPopupOpen}
-                  onClose={closePopup}
-                  title="Welcome to our Popup!">
-                  <h2>Hello</h2>
-               </Modal>
+               <FormBuilder
+                  submitHandler={submitHandler}
+                  register={register}
+                  handleSubmit={handleSubmit}
+               />
                <div className="w-[60%]">
-                  <CreateTaskForm />
+                  <CreateTaskForm fields={fields} />
 
                   <TaskList
                      tasks={tasks}

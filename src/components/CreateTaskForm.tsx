@@ -1,18 +1,12 @@
 import { PlusCircle } from "lucide-react";
 import { JSX, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FieldType } from "../lib/types";
 
-interface FieldType {
-   name: string;
-   label: string;
-   type: string;
-   id: string;
-   classes: string;
-   placeholder: string;
-   options?: string[];
+interface CreateTaskFormProps {
+   fields: FieldType[];
 }
-export default function CreateTaskForm() {
-   // Import react-hook-form
+export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
    const {
       register,
       handleSubmit,
@@ -20,106 +14,6 @@ export default function CreateTaskForm() {
    } = useForm();
 
    const [inputElements, setInputElement] = useState<JSX.Element[]>([]);
-   const [fields, setFields] = useState<FieldType[]>([
-      {
-         name: "title",
-         label: "Title",
-         type: "text",
-         id: "title",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Enter title",
-      },
-      {
-         name: "description",
-         label: "Description",
-         type: "textarea",
-         id: "textarea",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Your message",
-      },
-      {
-         name: "name",
-         label: "Name",
-         type: "text",
-         id: "name",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Enter name",
-      },
-      {
-         name: "email",
-         label: "Email",
-         type: "email",
-         id: "email",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Enter email",
-      },
-      {
-         name: "phone",
-         label: "Phone",
-         type: "tel",
-         id: "phone",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Enter phone",
-      },
-      {
-         name: "date",
-         label: "Date",
-         type: "date",
-         id: "date",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Select Date",
-      },
-      {
-         name: "category",
-         label: "Category",
-         type: "dropdown",
-         id: "category",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Select category",
-         options: [
-            "Work",
-            "Personal",
-            "Study",
-            "Health",
-            "Finance",
-            "Home",
-            "Other",
-         ],
-      },
-      {
-         name: "priority",
-         label: "Priority",
-         type: "radio",
-         id: "priority",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Select category",
-         options: ["Low", "Medium", "High"],
-      },
-      {
-         name: "tags",
-         label: "Tags",
-         type: "checkbox",
-         id: "tags",
-         classes:
-            "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-         placeholder: "Select category",
-         options: [
-            "Urgent",
-            "Important",
-            "Completed",
-            "Pending",
-            "In Progress",
-         ],
-      },
-   ]);
 
    // Create JSX element base on field type
    useEffect(() => {
@@ -132,10 +26,12 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <input
-                        {...register(field.name, { required: true })}
+                        {...register(field.name, { required: field.required })}
                         type={field.type}
                         id={field.id}
                         className={field.classes}
@@ -156,7 +52,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <textarea
                         {...register(field.name, { required: true })}
@@ -180,7 +78,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <input
                         {...register(field.name, { required: true })}
@@ -204,7 +104,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <input
                         {...register(field.name, { required: true })}
@@ -221,14 +123,42 @@ export default function CreateTaskForm() {
                   </div>
                );
             }
-            case "dropdown": {
+            case "number": {
                return (
                   <div className="mb-4">
                      <label
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
+                     </label>
+                     <input
+                        {...register(field.name, { required: true })}
+                        type={field.type}
+                        id={field.id}
+                        className={field.classes}
+                        placeholder={field.placeholder}
+                     />
+                     {errors[field.name] && (
+                        <p className="text-red-500 pt-2">
+                           This field is required
+                        </p>
+                     )}
+                  </div>
+               );
+            }
+            case "select": {
+               return (
+                  <div className="mb-4">
+                     <label
+                        htmlFor={field.id}
+                        className="block text-sm font-medium text-gray-700 mb-1">
+                        {field.label}
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <select
                         {...register(field.name, { required: true })}
@@ -256,7 +186,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <div className="flex space-x-4">
                         {field.options?.map((option, index) => (
@@ -286,7 +218,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <div className="flex space-x-4">
                         {field.options?.map((option, index) => (
@@ -316,7 +250,9 @@ export default function CreateTaskForm() {
                         htmlFor={field.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
                         {field.label}
-                        <span className="text-red-500"> *</span>
+                        {field.required && (
+                           <span className="text-red-500"> *</span>
+                        )}
                      </label>
                      <input
                         {...register(field.name, { required: true })}
