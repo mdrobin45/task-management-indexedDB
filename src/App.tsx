@@ -42,7 +42,7 @@ function App() {
    // Submit form builder data - Lifting state up
    const submitHandler = (data: FieldValues) => {
       const fieldProperties: FieldType = {
-         name: data.label.toLowerCase().replace(/\s/g, "-"),
+         name: data.label.toLowerCase().replace(/\s/g, "_"),
          id: `field-${Date.now()}`,
          label: data.label,
          placeholder: data.placeholder,

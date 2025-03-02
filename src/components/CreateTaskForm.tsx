@@ -1,11 +1,72 @@
 import { PlusCircle } from "lucide-react";
 import { JSX, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FieldType } from "../lib/types";
+import { FieldType, optionsType } from "../lib/types";
 
 interface CreateTaskFormProps {
    fields: FieldType[];
 }
+
+const inputFields: FieldType[] = [
+   {
+      name: "title",
+      id: "title",
+      label: "Title",
+      placeholder: "Enter task title",
+      type: "text",
+      required: true,
+      value: "",
+   },
+   {
+      name: "message",
+      id: "message",
+      label: "Message",
+      placeholder: "Write a message",
+      type: "textarea",
+      required: true,
+      value: "Hello",
+   },
+   {
+      name: "country",
+      id: "country",
+      label: "Country",
+      placeholder: "Select Country",
+      type: "select",
+      required: true,
+      value: "ghana",
+      options: [
+         { value: "nigeria", label: "Nigeria" },
+         { value: "ghana", label: "Ghana" },
+      ],
+   },
+   {
+      name: "tags",
+      id: "tags",
+      label: "Tags",
+      placeholder: "Select Tags",
+      type: "checkbox",
+      required: true,
+      value: "",
+      options: [
+         { value: "development", label: "Development" },
+         { value: "website", label: "Website" },
+      ],
+   },
+   {
+      name: "gender",
+      id: "gender",
+      label: "Gender",
+      placeholder: "Select Gender",
+      type: "radio",
+      required: false,
+      value: "",
+      options: [
+         { value: "male", label: "Male" },
+         { value: "female", label: "Female" },
+      ],
+   },
+];
+
 export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
    const {
       register,
@@ -14,30 +75,39 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
    } = useForm();
 
    const [inputElements, setInputElement] = useState<JSX.Element[]>([]);
+   const [formFields, setFormFields] = useState<FieldType[]>([]);
 
    // Create JSX element base on field type
    useEffect(() => {
-      const newElement = fields.map((field) => {
-         switch (field.type) {
+      const newElement = inputFields.map((field) => {
+         const fieldOption = {
+            ...field,
+            classes:
+               "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+         };
+         switch (fieldOption.type) {
             case "text": {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <input
-                        {...register(field.name, { required: field.required })}
-                        type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: fieldOption.required,
+                           value: fieldOption.value,
+                        })}
+                        type={fieldOption.type}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -49,21 +119,23 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <textarea
-                        {...register(field.name, { required: true })}
-                        // type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: true,
+                           value: fieldOption.value,
+                        })}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -75,21 +147,24 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <input
-                        {...register(field.name, { required: true })}
-                        type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: true,
+                           value: fieldOption.value,
+                        })}
+                        type={fieldOption.type}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -101,21 +176,24 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <input
-                        {...register(field.name, { required: true })}
-                        type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: true,
+                           value: fieldOption.value,
+                        })}
+                        type={fieldOption.type}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -127,21 +205,24 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <input
-                        {...register(field.name, { required: true })}
-                        type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: true,
+                           value: fieldOption.value,
+                        })}
+                        type={fieldOption.type}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -153,25 +234,31 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
-                     <select
-                        {...register(field.name, { required: true })}
-                        id={field.id}
-                        className={field.classes}>
-                        <option disabled>{field.placeholder}</option>
-                        {field.options?.map((option, index) => (
-                           <option key={index} value={option.value}>
-                              {option.label}
-                           </option>
-                        ))}
-                     </select>
-                     {errors[field.name] && (
+                     {fieldOption.options && (
+                        <select
+                           {...register(fieldOption.name, {
+                              required: true,
+                              value: fieldOption.value,
+                           })}
+                           id={fieldOption.id}
+                           className={fieldOption.classes}>
+                           {fieldOption.options?.map(
+                              (option: optionsType, index: number) => (
+                                 <option key={index} value={option.value}>
+                                    {option.label}
+                                 </option>
+                              )
+                           )}
+                        </select>
+                     )}
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -183,19 +270,22 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <div className="flex space-x-4">
-                        {field.options?.map((option, index) => (
+                        {fieldOption.options?.map((option, index) => (
                            <div className="flex gap-x-1" key={index}>
                               <input
-                                 {...register(field.name, { required: true })}
-                                 type={field.type}
+                                 {...register(fieldOption.name, {
+                                    required: true,
+                                    value: fieldOption.value,
+                                 })}
+                                 type={fieldOption.type}
                                  id={option.value}
                                  value={option.value}
                               />
@@ -205,7 +295,7 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                            </div>
                         ))}
                      </div>
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -217,19 +307,22 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <div className="flex space-x-4">
-                        {field.options?.map((option, index) => (
+                        {fieldOption.options?.map((option, index) => (
                            <div className="flex gap-x-1" key={index}>
                               <input
-                                 {...register(field.name, { required: true })}
-                                 type={field.type}
+                                 {...register(fieldOption.name, {
+                                    required: true,
+                                    value: fieldOption.value,
+                                 })}
+                                 type={fieldOption.type}
                                  id={option.value}
                                  value={option.value}
                               />
@@ -239,7 +332,7 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                            </div>
                         ))}
                      </div>
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -251,21 +344,24 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
                return (
                   <div className="mb-4">
                      <label
-                        htmlFor={field.id}
+                        htmlFor={fieldOption.id}
                         className="block text-sm font-medium text-gray-700 mb-1">
-                        {field.label}
-                        {field.required && (
+                        {fieldOption.label}
+                        {fieldOption.required && (
                            <span className="text-red-500"> *</span>
                         )}
                      </label>
                      <input
-                        {...register(field.name, { required: true })}
-                        type={field.type}
-                        id={field.id}
-                        className={field.classes}
-                        placeholder={field.placeholder}
+                        {...register(fieldOption.name, {
+                           required: true,
+                           value: fieldOption.value,
+                        })}
+                        type={fieldOption.type}
+                        id={fieldOption.id}
+                        className={fieldOption.classes}
+                        placeholder={fieldOption.placeholder}
                      />
-                     {errors[field.name] && (
+                     {errors[fieldOption.name] && (
                         <p className="text-red-500 pt-2">
                            This field is required
                         </p>
@@ -284,8 +380,21 @@ export default function CreateTaskForm({ fields }: CreateTaskFormProps) {
 
    // Submit form data
    const submitHandler = (data: Record<string, string>) => {
-      console.log(data);
+      const dataKeys = Object.keys(data);
+      dataKeys.forEach((key) => {
+         const field = inputFields.find((field) => field.name === key);
+         if (field?.name === key) {
+            field.value = data[key];
+         }
+
+         setFormFields((prevFields) => [...prevFields, field as FieldType]);
+      });
    };
+
+   useEffect(() => {
+      console.log(formFields);
+   }, [formFields]);
+
    return (
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
          <h2 className="text-xl font-semibold mb-4 text-gray-700">

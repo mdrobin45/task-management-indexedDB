@@ -1,4 +1,4 @@
-interface optionsType {
+export interface optionsType {
    value: string;
    label: string;
 }
@@ -7,8 +7,9 @@ export interface FieldType {
    label: string;
    type: string;
    id: string;
-   classes: string;
+   classes?: string;
    required?: boolean;
+   value?: string;
    placeholder: string;
    options?: optionsType[];
 }
